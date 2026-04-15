@@ -8,6 +8,7 @@ public static void main(String[] args)
   //System.out.println(linear_search(arr, 1, 0));
   ArrayList<Integer> list=new ArrayList<>();
   System.out.println(findAllIndices(arr, 2, 0, list));
+  System.out.println(return_list_without_passing_it_as_argument(arr, 2, 0));
 }
 
 static boolean check_if_Array_is_sorted(int[] arr,int i)
@@ -41,5 +42,21 @@ static ArrayList<Integer> findAllIndices(int[] arr, int target, int i, ArrayList
         list.add(i);
     }
     return findAllIndices(arr, target, i + 1, list);
+}
+
+static ArrayList<Integer> return_list_without_passing_it_as_argument(int[] arr,int target, int i)
+{
+  ArrayList<Integer> list=new ArrayList<>();
+  if(i==arr.length)
+  {
+    return list;
+  }
+  if(arr[i]==target)
+  {
+    list.add(i);
+  }
+  ArrayList<Integer> ansFromBelowCalls=return_list_without_passing_it_as_argument(arr, target, i+1);
+  list.addAll(ansFromBelowCalls);
+  return list;
 }
 }
