@@ -1,3 +1,4 @@
+package Array;
 
 public class Binary_search_in_rotated_array
 {
