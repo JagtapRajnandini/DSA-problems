@@ -24,6 +24,11 @@ public class Swap_two_numbers
     
     static void Solution(int a, int b)
     {
+        // a = a ^ b
+        // b = a ^ b = (a ^ b) ^ b = a      (because b ^ b = 0)
+        // a = a ^ b = (a ^ b) ^ a = b      (because a ^ a = 0)
+        // Final: a and b are swapped.
+        
         System.out.println("Before Swapping:");
         System.out.println("a : " + a + " | b : " + b);
         a = a ^ b;
