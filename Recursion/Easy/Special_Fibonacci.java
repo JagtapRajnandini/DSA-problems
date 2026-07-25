@@ -52,6 +52,13 @@ public class Special_Fibonacci
 
     private static int specialFibbo1(int a, int b, int n)
     {
+        // Why this solution fails:
+        // 1. Every call branches into two recursive calls (f(n-1) and f(n-2)).
+        // 2. The same values are computed many times (e.g., f(4), f(3), etc.).
+        // 3. Time complexity becomes O(2^n), which is far too slow.
+        // 4. The recursion depth is O(n), so for large n (up to 10^9),
+        //    it will also cause a StackOverflowError.
+        // Therefore, this approach cannot pass the given constraints.
         if(n==0)return a;
         if(n==1)return b;
         return specialFibbo1(a, b, n-1) ^ specialFibbo1(a, b, n-2);
