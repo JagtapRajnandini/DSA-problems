@@ -5,7 +5,7 @@ public class PrintAllSubSequenceForStringS
 {
     public static void main(String[] args)
     {
-        List<String> list = new ArrayList<>();
+        //List<String> list = new ArrayList<>();
         
         System.out.println(printSubSequence3("abc",""));
     }
@@ -72,4 +72,71 @@ public class PrintAllSubSequenceForStringS
         list=listL;
         return list;
     }
+
+    public static List<String> printSubSequenceIterative(String s)
+{
+    List<String> ans = new ArrayList<>();
+    ans.add("");
+
+    for (char ch : s.toCharArray())
+    {
+        int size = ans.size();
+
+        for (int i = 0; i < size; i++)
+        {
+            ans.add(ans.get(i) + ch);
+        }
+    }
+
+    return ans;
+
+
+    /*
+ans = [""]
+
+---------------------
+ch = 'a'
+
+size = 1
+
+Take ""
+Add "" + 'a'
+
+ans = ["", "a"]
+
+---------------------
+ch = 'b'
+
+size = 2
+
+Take ""
+Add "b"
+
+Take "a"
+Add "ab"
+
+ans = ["", "a", "b", "ab"]
+
+---------------------
+ch = 'c'
+
+size = 4
+
+Take ""
+Add "c"
+
+Take "a"
+Add "ac"
+
+Take "b"
+Add "bc"
+
+Take "ab"
+Add "abc"
+
+ans = ["", "a", "b", "ab", "c", "ac", "bc", "abc"]
+    
+    */
+}
+
 }
