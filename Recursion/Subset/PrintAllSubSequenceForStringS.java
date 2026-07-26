@@ -1,13 +1,15 @@
 package Recursion.Subset;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 public class PrintAllSubSequenceForStringS
 {
     public static void main(String[] args)
     {
         //List<String> list = new ArrayList<>();
         
-        System.out.println(printSubSequence3("abc",""));
+        int[] arr={1,2,2};
+        System.out.println(PrintSubSet_String_with_repeating_characters(arr));
     }
 
     public static void  printSubSequence1(String unprocessed, String processed, List<String> ans)
@@ -59,6 +61,7 @@ public class PrintAllSubSequenceForStringS
             Auxiliary Space (recursion stack): O(n)
             Output Space: O(n × 2^n) to store all subsets.
         */
+        
        List<String> list=new ArrayList<>();
         if(unprocessed.isEmpty())
         {
@@ -75,23 +78,8 @@ public class PrintAllSubSequenceForStringS
 
     public static List<String> printSubSequenceIterative(String s)
 {
-    List<String> ans = new ArrayList<>();
-    ans.add("");
 
-    for (char ch : s.toCharArray())
-    {
-        int size = ans.size();
-
-        for (int i = 0; i < size; i++)
-        {
-            ans.add(ans.get(i) + ch);
-        }
-    }
-
-    return ans;
-
-
-    /*
+     /*
 ans = [""]
 
 ---------------------
@@ -137,6 +125,52 @@ Add "abc"
 ans = ["", "a", "b", "ab", "c", "ac", "bc", "abc"]
     
     */
+
+    List<String> ans = new ArrayList<>();
+    ans.add("");
+
+    for (char ch : s.toCharArray())
+    {
+        int size = ans.size();
+
+        for (int i = 0; i < size; i++)
+        {
+            ans.add(ans.get(i) + ch);
+        }
+    }
+
+    return ans;
+   
 }
 
+    public static List<List<Integer>> PrintSubSet_String_with_repeating_characters(int[] arr)
+    {
+        Arrays.sort(arr);
+        List<List<Integer>> outer = new ArrayList<>();
+        outer.add(new ArrayList<>());
+        int start=0;
+        int end=0;
+        for(int i=0;i<arr.length;i++)
+        {
+            start=0;
+            //If my current and previous element is same, then start= end+1
+            if(i>0 && arr[i]==arr[i-1])
+            {
+                start=end+1;
+            }
+            end=outer.size()-1;
+            int n=outer.size();
+
+            for(int j=start;j<n;j++)
+            {
+                List<Integer> internal=new ArrayList<>(outer.get(j));
+                internal.add(arr[i]);
+                outer .add(internal);
+            
+            }
+
+        }
+        return outer;
+
+    }
 }
