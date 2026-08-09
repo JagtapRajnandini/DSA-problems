@@ -430,6 +430,161 @@ class Tree
     }
 
 
+    /*
+ * ================================================================
+ * BFS / LEVEL-ORDER TRAVERSAL OF BINARY TREE
+ * ================================================================
+ */
+ /* BFS = Breadth-First Search.
+ * In a Binary Tree, BFS visits nodes:
+ *      LEVEL BY LEVEL
+ *      LEFT → RIGHT
+ * Example:
+ *              1
+ *            /   \
+ *           2     3
+ *          / \   / \
+ *         4   5 6   7
+ * BFS / Level-Order:
+ *      1 → 2 → 3 → 4 → 5 → 6 → 7
+ * ================================================================
+ * WHY DO WE USE A QUEUE?
+ * ================================================================
+ * BFS uses a Queue because Queue follows FIFO:
+ *      First In → First Out
+ * This makes the tree get processed level by level.
+ * Example:
+ *      Start:
+ *          Queue = [1]
+ *      Process 1:
+ *          Queue = [2, 3]
+ *      Process 2:
+ *          Queue = [3, 4, 5]
+ *      Process 3:
+ *          Queue = [4, 5, 6, 7]
+ * Therefore, nodes are processed:
+ *      1 → 2 → 3 → 4 → 5 → 6 → 7
+ * ================================================================
+ * CODE LOGIC
+ * ================================================================
+ * 1. If the tree is empty, there is nothing to traverse.
+ *      if(root == null)
+ *          return;
+ * 2. Create a Queue to store nodes waiting to be processed.
+ *      Queue<Node> q = new LinkedList<>();
+ * 3. Add the root to the Queue.
+ *      q.offer(root);
+ *      Queue:
+ *          [1]
+ * 4. Continue while the Queue is not empty.
+ *      while(!q.isEmpty())
+ * 5. Remove the FRONT node from the Queue.
+ *      Node curr = q.poll();
+ *      poll() = removes and returns the front element.
+ * 6. Process/print the current node.
+ *      System.out.print(curr.val + " ");
+ * 7. Add the LEFT child if it exists.
+ *      if(curr.left != null)
+ *          q.offer(curr.left);
+ * 8. Add the RIGHT child if it exists.
+ *      if(curr.right != null)
+ *          q.offer(curr.right);
+ * 9. Repeat until the Queue becomes empty.
+ * ================================================================
+ * DRY RUN
+ * ================================================================
+ * Tree:
+ *              1
+ *            /   \
+ *           2     3
+ *          / \   / \
+ *         4   5 6   7
+ * Initial:
+ *      Queue = [1]
+ * ------------------------------------------------
+ * Process 1
+ *      Print: 1
+ *      Add 2 and 3
+ *      Queue = [2, 3]
+ * ------------------------------------------------
+ * Process 2
+ *      Print: 2
+ *      Add 4 and 5
+ *      Queue = [3, 4, 5]
+ * ------------------------------------------------
+ * Process 3
+ *      Print: 3
+ *      Add 6 and 7
+ *      Queue = [4, 5, 6, 7]
+ * ------------------------------------------------
+ * Process 4
+ *      Print: 4
+ *      No children
+ *      Queue = [5, 6, 7]
+ * ------------------------------------------------
+ * Process 5
+ *      Print: 5
+ *      Queue = [6, 7]
+ * ------------------------------------------------
+ * Process 6
+ *      Print: 6
+ *      Queue = [7]
+ * ------------------------------------------------
+ * Process 7
+ *      Print: 7
+ *      Queue = []
+ * Queue is empty → traversal ends.
+ * Final output:
+ *      1 2 3 4 5 6 7
+ * ================================================================
+ * IMPORTANT DIFFERENCE FROM DFS
+ * ================================================================
+ * DFS:
+ *      Goes deep into a branch first.
+ *      Uses:
+ *          Recursion / Stack
+ *      Traversals:
+ *          Inorder
+ *          Preorder
+ *          Postorder
+ * BFS:
+ *      Goes level by level.
+ *      Uses:
+ *          Queue
+ *      Traversal:
+ *          Level-Order
+ * ================================================================
+ * TIME COMPLEXITY
+ * ================================================================
+ * Every node is visited exactly once.
+ *      Time = O(n)
+ * where n = number of nodes.
+ * ================================================================
+ * SPACE COMPLEXITY
+ * ================================================================
+ * The Queue stores nodes waiting to be processed.
+ *      Space = O(w)
+ * where w = maximum width of the tree.
+ * Worst case:
+ *      O(n)
+ * Therefore:
+ *      Worst-case Auxiliary Space = O(n)
+ * ================================================================
+ * MEMORY TRICK
+ * ================================================================
+ *      BFS = LEVEL BY LEVEL
+ *          ↓
+ *       USE QUEUE
+ *          ↓
+ *       FIFO
+ *          ↓
+ *      LEFT → RIGHT
+ * Key idea:
+ *      "Remove one node from the Queue,
+ *       process it, then add its left and
+ *       right children to the Queue."
+ * ================================================================
+ */
     void traversal_BFS(Node root)
     {
         if(root == null)
@@ -448,6 +603,23 @@ class Tree
             if(curr.right != null)
                 q.offer(curr.right);
         }
+    }
+
+
+/*Searching in Binary Tree
+ * Approach:
+ * Use DFS to search the binary tree.
+ * Check the current node, then recursively search
+ * the left and right subtrees.
+ *
+ * Time: O(n)
+ * Space: O(h), where h is the height of the tree.
+ */
+    boolean searchNode(Node root, int val)
+    {
+        if(root==null)return false;
+        if(root.val==val)return true;
+        return searchNode(root.left, val) || searchNode(root.right, val);
     }
 
 }
@@ -475,6 +647,10 @@ class BinaryTree
         System.out.println();
 
         t.traversal_BFS(t.root);
+
+        System.out.println("\n"+t.searchNode(t.root, 3));
+        System.out.println(t.searchNode(t.root, 10));
+
 
     }
 }
