@@ -622,6 +622,75 @@ class Tree
         return searchNode(root.left, val) || searchNode(root.right, val);
     }
 
+    /*
+ * Deletion in a normal Binary Tree:
+ *
+ * 1. Find the node to delete.
+ * 2. Find the deepest/rightmost node.
+ * 3. Copy deepest node's value into the target node.
+ * 4. Delete the deepest node.
+ *
+ * Time: O(n)
+ * Space: O(n)
+ */
+void delete(int val)
+{
+    if (root == null)
+        return;
+
+    // If tree has only one node
+    if (root.left == null && root.right == null)
+    {
+        if (root.val == val)
+            root = null;
+        return;
+    }
+
+    Queue<Node> q = new LinkedList<>();
+    q.offer(root);
+
+    Node target = null;
+    Node deepest = null;
+    Node parent = null;
+
+    while (!q.isEmpty())
+    {
+        Node curr = q.poll();
+
+        // Find node to delete
+        if (curr.val == val)
+            target = curr;
+
+        // Find deepest/rightmost node
+        if (curr.left != null)
+        {
+            parent = curr;
+            deepest = curr.left;
+            q.offer(curr.left);
+        }
+
+        if (curr.right != null)
+        {
+            parent = curr;
+            deepest = curr.right;
+            q.offer(curr.right);
+        }
+    }
+
+    // Value not found
+    if (target == null)
+        return;
+
+    // Replace target value with deepest node value
+    target.val = deepest.val;
+
+    // Delete deepest node
+    if (parent.left == deepest)
+        parent.left = null;
+    else
+        parent.right = null;
+}
+    
 }
 
 
